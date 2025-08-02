@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.firebase.firestore)
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.androidx.constraintlayout)
     androidTestImplementation(platform(libs.androidx.compose.bom))

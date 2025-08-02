@@ -8,15 +8,15 @@
 
     <ImageView
         android:id="@+id/app_icon"
-        android:layout_width="80dp"
+        android:layout_width="120dp"
         android:layout_height="80dp"
         android:contentDescription="zzz"
         android:scaleType="fitCenter"
-android:padding="10dp"
+        android:padding="10dp"
         android:background="@drawable/home_app_selector"
-
         android:focusable="true"
         android:clickable="true"/>
+
 
     <TextView
         android:id="@+id/app_name"

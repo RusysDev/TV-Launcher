@@ -12,63 +12,22 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.content.pm.ResolveInfo // This is the line that must be present
+import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
+import com.google.android.flexbox.FlexboxLayout
 
 class HomeActivity: AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_layout)
-/*
-        // Get the list of all TV launcher activities
-
-        tvAppActivities.forEach { resolveInfo ->
-            val appView = LayoutInflater.from(this).inflate(R.layout.list_item_tv_app, appsContainer, false)
-
-            val appIcon: ImageView = appView.findViewById(R.id.app_icon)
-            val appName: TextView = appView.findViewById(R.id.app_name)
-
-            val appInfo: ApplicationInfo = resolveInfo.activityInfo.applicationInfo
-
-            // Populate the views
-            appIcon.setImageDrawable(appInfo.loadIcon(packageManager))
-            appName.text = appInfo.loadLabel(packageManager)
-
-            // Set the click listener on the entire appView
-            appView.setOnClickListener {
-                Log.d("LAUNCH_APP", "Attempting to launch app: ${appInfo.loadLabel(packageManager)}")
-
-                // Use the ResolveInfo object to build a direct launch intent
-                val launchIntent = Intent(Intent.ACTION_MAIN).apply {
-                    addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
-                    component = android.content.ComponentName(
-                        resolveInfo.activityInfo.packageName,
-                        resolveInfo.activityInfo.name
-                    )
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-
-                try {
-                    startActivity(launchIntent)
-                } catch (e: Exception) {
-                    Log.e("LAUNCH_APP", "Failed to launch app: ${appInfo.packageName}", e)
-                }
-            }
-
-            // Add the new view to the container
-            appsContainer.addView(appView)
-        }
-    }
-
-
-}
-    */
 
         val tvApps = getTvAppActivities(this)
 
 
-        // Reference the container LinearLayout from your main layout
-        val appsContainer = findViewById<LinearLayout>(R.id.apps_container_layout)
+        // Correct: Cast to FlexboxLayout
+        val appsContainer = findViewById<FlexboxLayout>(R.id.apps_container_layout)
 
         // Loop through the list of TV apps and add them to the container
         tvApps.forEach { resolveInfo ->
@@ -84,6 +43,35 @@ class HomeActivity: AppCompatActivity()  {
 
             // Populate the views with data from the ApplicationInfo object
             appIcon.setImageDrawable(appInfo.loadIcon(packageManager))
+        //    appIcon.background = getAppIconBackground(appInfo.loadIcon(packageManager))
+
+            // Get the app's icon drawable from the package manager
+            val appIconDrawable = appInfo.loadIcon(packageManager)
+
+// Get the background layer (it could be a ColorDrawable or something else)
+            val backgroundDrawable = getAppIconBackground(appIconDrawable)
+
+// If a background drawable exists, set it as the background of your ImageView.
+// This works for both ColorDrawables and other Drawable types.
+            if (backgroundDrawable != null) {
+                appIcon.background = backgroundDrawable
+
+                // Now set the foreground on top of it.
+                // The foreground is always the main icon image.
+                if (appIconDrawable is AdaptiveIconDrawable) {
+                    appIcon.setImageDrawable(appIconDrawable.foreground)
+                } else {
+                    // For older, non-adaptive icons, the whole image is the foreground.
+                    appIcon.setImageDrawable(appIconDrawable)
+                }
+
+            } else {
+                // If there's no adaptive icon background (e.g., an older app),
+                // just set the entire icon as the image.
+                appIcon.setImageDrawable(appIconDrawable)
+            }
+
+
             appName.text = appInfo.loadLabel(packageManager)
 
 
@@ -113,19 +101,6 @@ class HomeActivity: AppCompatActivity()  {
         }
     }
 
-    private fun getTvApps(context: Context): List<ApplicationInfo> {
-        val packageManager = context.packageManager
-
-        val mainIntent = Intent(Intent.ACTION_MAIN, null).apply {
-            addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
-        }
-
-        return packageManager.queryIntentActivities(mainIntent, 0)
-            .map { resolveInfo ->
-                packageManager.getApplicationInfo(resolveInfo.activityInfo.packageName, PackageManager.GET_META_DATA)
-            }
-    }
-
     // This function now returns a list of ResolveInfo objects
     private fun getTvAppActivities(context: Context): List<ResolveInfo> {
         val packageManager = context.packageManager
@@ -135,5 +110,12 @@ class HomeActivity: AppCompatActivity()  {
         }
 
         return packageManager.queryIntentActivities(mainIntent, 0)
+    }
+
+    fun getAppIconBackground(drawable: Drawable): Drawable? {
+        if (drawable is AdaptiveIconDrawable) {
+            return drawable.background
+        }
+        return null
     }
 }
