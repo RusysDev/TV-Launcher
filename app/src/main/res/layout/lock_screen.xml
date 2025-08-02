@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#101010">
+
+    <ImageView
+        android:id="@+id/padlock_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/icon_padlock" />
+
+    <TextView
+        android:id="@+id/lock_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Oi..."
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/lock_timer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#aaaaaa"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginTop="2dp"/>
+
+
+
+</LinearLayout>

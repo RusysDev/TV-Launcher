@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State when the bubble is focused -->
+    <item android:state_focused="true">
+        <shape android:shape="oval">
+            <solid android:color="#a0a0a0"/> <!-- A bright blue for focus -->
+            <stroke android:width="5dp" android:color="#eaeaea"/>
+            <size android:width="150dp" android:height="150dp"/>
+        </shape>
+    </item>
+    <!-- Default, unfocused state -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#606060"/> <!-- A neutral gray -->
+            <size android:width="150dp" android:height="150dp"/>
+        </shape>
+    </item>
+</selector>

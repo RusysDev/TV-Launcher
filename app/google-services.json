@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "16530653001",
+    "project_id": "rusys-tv-launcher",
+    "storage_bucket": "rusys-tv-launcher.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:16530653001:android:2c9eb9ebe71498e7db2498",
+        "android_client_info": {
+          "package_name": "lt.rusys.tv.launcher"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqjIdiXWVJ5f7kztsdvDsDsCdaphWUpgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
